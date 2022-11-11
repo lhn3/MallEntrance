@@ -45,13 +45,17 @@ class myRequest {
         console.log('全部响应拦截，成功')
         //删除加载动画
         this.loading ? this.loading.close() : ""
-        res.data.code = 200
+        if (res.data.code === 20000) {
+          res.data.code = 200
+        } else {
+          res.data.code = 0
+        }
         return res.data
       },
       (err) => {
         //删除加载动画
         this.loading ? this.loading.close() : ""
-        // err.response.data.code = 0
+        err.response.data.code = 0
         return err.response?.data
       }
     )
@@ -107,6 +111,7 @@ const myAxios = new myRequest({
       if (token) {
         config.headers.token = token
       }
+      config.headers['Content-Type'] = 'application/json'
       return config
     }
   }

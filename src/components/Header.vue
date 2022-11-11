@@ -133,11 +133,11 @@ const onSubmit = () => {
 const logout = async () => {
   let res = await messageBox('确认退出登录?')
   if (!res) return
-  let loginOutRes = await loginOut()
+  let loginOutRes = await loginOut(store.state.manager.userId)
   if (loginOutRes.code !== 200) {
     return ElMessage.error(loginOutRes.msg)
   }
-  ElMessage.success(loginOutRes.data)
+  ElMessage.success(loginOutRes.msg)
   store.dispatch('manager/loginOutAction')
   router.replace('/login')
 }

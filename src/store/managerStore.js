@@ -8,35 +8,35 @@ const managerStore = {
   state() {
     return {
       token: '',
+      userId: '',
       avatar: '',
-      id: null,
-      menus: [],
-      role: {},
       ruleNames: [],
-      super: null,
-      username: ''
+      userName: '',
+      menus: []
     }
   },
   mutations: {
     saveToken(state, payload) {
       state.token = payload
     },
+    saveUserId(state, payload) {
+      state.userId = payload
+    },
 
     saveUserInfo(state, payload) {
-      state.avatar = payload.avatar
-      state.id = payload.id
+      state.avatar = payload.headPortrait
+      state.ruleNames = payload.permissions
+      state.userName = payload.userName
       state.menus = payload.menus
-      state.role = payload.role
-      state.ruleNames = payload.ruleNames
-      state.super = payload.super
-      state.username = payload.username
     }
   },
   getters: {},
   actions: {
     tokenAction(action, payload) {
-      action.commit('saveToken', payload)
-      cookies.set('disha-token', payload)
+      action.commit('saveToken', payload.token)
+      action.commit('saveUserId', payload.userId)
+      cookies.set('disha-token', payload.token)
+      cookies.set('disha-userId', payload.userId)
     },
 
     userInfoAction(action, payload) {
@@ -49,14 +49,17 @@ const managerStore = {
     // 退出登录
     loginOutAction(action, payload) {
       cookies.remove('disha-token')
+      cookies.remove('disha-userId')
       cache.delCache('disha-userInfo')
     },
 
     // 数据持久化
     keepStoreAction(action, payload) {
       const token = cookies.get('disha-token')
+      const userId = cookies.get('disha-userId')
       const userInfo = cache.getCache('disha-userInfo')
       token ? action.commit('saveToken', token) : ''
+      userId ? action.commit('saveUserId', userId) : ''
       userInfo ? action.commit('saveUserInfo', userInfo) : ''
     }
   }

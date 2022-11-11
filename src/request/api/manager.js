@@ -1,17 +1,30 @@
 import myAxios from '../index'
 
+//获取验证码
+export const code = () => {
+  return myAxios.get({url: '/getVerifyCode'})
+}
+
 //请求登录
 export const login = (data) => {
   return myAxios.post({
-    url: '/admin/login',
+    url: '/login',
     data
   })
 }
 
 //获取用户信息
-export const getUserInfo = () => {
+export const getUserInfo = id => {
   return myAxios.post({
-    url: '/admin/getinfo'
+    url: `/getUserInfo/${id}`
+  })
+}
+
+//获取用户菜单
+export const getUserMenu = id => {
+  return myAxios.get({
+    url: '/getMenuListById',
+    data:{userId: id}
   })
 }
 
@@ -24,9 +37,9 @@ export const changePassword = (data) => {
 }
 
 //退出登录
-export const loginOut = () => {
+export const loginOut = id => {
   return myAxios.post({
-    url: '/admin/logout'
+    url: `/logout/${id}`
   })
 }
 

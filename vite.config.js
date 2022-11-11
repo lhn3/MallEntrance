@@ -22,16 +22,16 @@ export default defineConfig({
     port: 5173, // 端口号
     https: false,
     // 代理
-    proxy:{
-      //将/api开头的url
-      '/api':{
-        //用这个url代替
-        target:'http://ceshi13.dishait.cn',
-        changeOrigin:true,
-        //并将/api清空
-        rewrite:(path) => path.replace(/^\/api/,'')
-      }
-    }
+    // proxy:{
+    //   //将/api开头的url
+    //   '/api':{
+    //     //用这个url代替
+    //     target:'http://shop.cyljx.xyz:8089',
+    //     changeOrigin:true,
+    //     //并将/api清空
+    //     rewrite:(path) => path.replace(/^\/api/,'')
+    //   }
+    // }
   },
   //less使用
   pluginOptions: {
